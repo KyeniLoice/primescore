@@ -12,7 +12,8 @@ class ClientController extends Controller
      */
     public function index()
     {
-        //
+        $clients = Client::orderBy('id', 'desc')->limit(1)->get();
+        return view('clients.index', compact('clients'));
     }
 
     /**
@@ -33,11 +34,11 @@ class ClientController extends Controller
             'idNo'=>'required|max:100',
             'amount'=>'required|max:255'
         ]);
-     
+
         $client = new Client();
         $client->name =  $data['name'];
         $client ->idNo = $data['idNo'];
-        $client ->amount =$data['amount'];      
+        $client ->amount =$data['amount'];
         $client->save();
 
         return  redirect('clients.index')->with('message','Clients is ready for scoring');
